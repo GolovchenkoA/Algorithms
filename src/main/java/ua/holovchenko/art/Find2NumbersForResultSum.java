@@ -35,9 +35,74 @@ public class Find2NumbersForResultSum {
             System.out.println(sumNumber);
         }
 
+        // BINARY SEARCH
+        // Slower than previous, but use less memory.
+        // Complexity: time: O(n log n)  RAM: O(1)
+        sumNumbers = getSumBinarySearch(numbers, expectedSum);
+        System.out.println("Numbers (binary search): ");
+        for (int sumNumber : sumNumbers) {
+            System.out.println(sumNumber);
+        }
+
+
+        // 2 Pointers
+        // The most efficient algorithm !!!!!!!!!!!!!!!!!!!!!
+        // Complexity: time: O(n)  RAM: O(1)
+        int[] numbers2 = {7, -1, 5, 2, 8, -3, 3};
+        int expectedSum2 = 0;
+        sumNumbers = getSum2Pointers(numbers2, expectedSum2);
+//        System.out.println("sorted array: ");
+//        for (int i : numbers2) {
+//            System.out.print(i + " ");
+//        }
+        System.out.println("Numbers (2 pointers): ");
+        for (int sumNumber : sumNumbers) {
+            System.out.println(sumNumber);
+        }
 
     }
 
+    /**
+     * This algorithm uses 2 pointers for left and right element.
+     * If sum of this elements equals to expected sum - returns result.
+     *
+     * Complexity: time: O(n)  RAM: O(1)
+     * @param numbers
+     * @param expectedSum
+     * @return
+     */
+    private static int[] getSum2Pointers(int[] numbers, int expectedSum) {
+        Arrays.sort(numbers); // array must be sorted. From smallest to largest numbers
+
+        int leftBorderIndex = 0; // next after current number
+        int rightBorderIndex = numbers.length - 1;
+
+        for (int i = 0; i < numbers.length; i++) {
+            int sum = numbers[leftBorderIndex] + numbers[rightBorderIndex];
+            if (sum == expectedSum) {
+                return new int[]{numbers[leftBorderIndex], numbers[rightBorderIndex]};
+            }
+
+            if (sum < expectedSum) { // move left border and point to a greater number
+                leftBorderIndex += 1;
+            } else {  // move right border and point to a smallest number
+                rightBorderIndex -= 1;
+            }
+        }
+
+
+
+        return new int[0];
+    }
+
+    /**
+     *  method uses binary search and sorted array
+     *  Uses 2 pointers for left and right border. And pointer on middle index.
+     *  Complexity: time: O(n log n)  RAM: O(1)
+     * @param numbers
+     * @param expectedSum
+     * @return
+     */
     private static int[] getSumBinarySearch(int[] numbers, int expectedSum) {
         Arrays.sort(numbers);
 
